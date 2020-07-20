@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:least_count_demo/widget/DynamicWidget.dart';
+import 'package:least_count_demo/widget/bd_login.dart';
 
 void main() => runApp(MyApp());
 
@@ -59,6 +60,11 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Text("4. Staggered Grids", style: TextStyle(color: Colors.black),),
               color: Colors.greenAccent,
             ),
+            RaisedButton(
+              onPressed: ()=> _openWidget(5, "Backdrop Login"),
+              child: Text("5. Backdrop Login", style: TextStyle(color: Colors.white),),
+              color: Colors.black54,
+            ),
           ],
         ),
       )
@@ -66,6 +72,10 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void _openWidget(int index, String title){
+    if(index == 5){
+      Navigator.of(context).push(MaterialPageRoute(builder: (context)=> BackDropLoginDemo()));
+      return;
+    }
     Navigator.of(context).push(MaterialPageRoute(builder: (context)=> DynamicWidget(index, title)));
   }
 }

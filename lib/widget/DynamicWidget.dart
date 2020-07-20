@@ -1,3 +1,4 @@
+import 'package:backdrop/backdrop.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -41,6 +42,7 @@ class _DynamicWidgetState extends State<DynamicWidget> {
       case 2: return _listView();
       case 3: return _theContainer();
       case 4: return _staggredGridView();
+      case 5: return _backdrop();
     }
     return null;
   }
@@ -143,6 +145,16 @@ class _DynamicWidgetState extends State<DynamicWidget> {
         crossAxisSpacing: 4.0,
         reverse: true,
       ),
+    );
+  }
+
+  // Its optional
+  Widget _backdrop(){
+    return BackdropScaffold(
+      title: Text("BD login"),
+      headerHeight: 50.0,frontLayerBorderRadius: BorderRadius.circular(10.0),
+      backLayer: Center(child: Text("I am back cover"),),
+      frontLayer: Center(child: Text("I am front cover"),),
     );
   }
 }
