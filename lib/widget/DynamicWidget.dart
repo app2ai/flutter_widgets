@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 class DynamicWidget extends StatefulWidget {
   final index;
@@ -38,6 +40,7 @@ class _DynamicWidgetState extends State<DynamicWidget> {
       case 1: return _expantionListView();
       case 2: return _listView();
       case 3: return _theContainer();
+      case 4: return _staggredGridView();
     }
     return null;
   }
@@ -115,6 +118,31 @@ class _DynamicWidgetState extends State<DynamicWidget> {
   }
 
   Widget _staggredGridView(){
-//    return
+    List imgUrls = [
+      "https://images.pexels.com/photos/264146/pexels-photo-264146.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=250",
+      "https://images.pexels.com/photos/163443/war-desert-guns-gunshow-163443.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=250",
+      "https://images.pexels.com/photos/89112/pexels-photo-89112.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=250",
+      "https://images.pexels.com/photos/3706650/pexels-photo-3706650.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=250",
+      "https://images.pexels.com/photos/40753/military-raptor-jet-f-22-airplane-40753.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=250",
+      "https://images.pexels.com/photos/2802368/pexels-photo-2802368.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=250",
+      "https://images.pexels.com/photos/78783/submachine-gun-rifle-automatic-weapon-weapon-78783.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=250",
+      "https://images.pexels.com/photos/3706670/pexels-photo-3706670.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=250",
+    ];
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8.0),
+      ),
+      child: StaggeredGridView.countBuilder(
+        crossAxisCount: 4,
+        itemCount: 8,
+        itemBuilder: (context, index){
+          return Image.network(imgUrls[index], fit: BoxFit.fill,);
+        },
+        staggeredTileBuilder: (int index)=> StaggeredTile.count(2, index.isEven?2:1),
+        mainAxisSpacing: 4.0,
+        crossAxisSpacing: 4.0,
+        reverse: true,
+      ),
+    );
   }
 }

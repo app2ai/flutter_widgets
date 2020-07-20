@@ -56,7 +56,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             RaisedButton(
               onPressed: ()=> _openWidget(4, "Staggered Grids"),
-              child: Text("3. Staggered Grids", style: TextStyle(color: Colors.black),),
+              child: Text("4. Staggered Grids", style: TextStyle(color: Colors.black),),
               color: Colors.greenAccent,
             ),
           ],
