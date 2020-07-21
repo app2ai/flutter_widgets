@@ -18,7 +18,8 @@ class _DynamicWidgetState extends State<DynamicWidget> with TickerProviderStateM
   var sz = 300.0;
   final fastMotion = 1;
   final slowMotion = 10;
-  final fast = 300;
+  final fast = 1500;
+  double initValue = 24.0;
 
   @override
   void initState() {
@@ -181,7 +182,6 @@ class _DynamicWidgetState extends State<DynamicWidget> with TickerProviderStateM
   }
   
   Widget _animBuilder(){
-    double initValue = 24.0;
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -199,25 +199,29 @@ class _DynamicWidgetState extends State<DynamicWidget> with TickerProviderStateM
               );
             },
           ),
-          TweenAnimationBuilder(
-            tween: Tween(begin: 0, end: initValue),
-            duration: Duration(milliseconds: 300),
-            child: IconButton(
-              icon: Icon(Icons.star, color: Colors.orange,),
-            ),
-            builder: (BuildContext context, size, Widget child){
-              return IconButton(
-                color: Colors.blue,
-                icon: child,
-                iconSize: size,
-                onPressed: (){
-                  setState(() {
-                    // If size is small then make it bigger and vise-versa
-                    initValue = initValue == 24.0?48.0:initValue;
-                  });
+          Container(
+            child: TweenAnimationBuilder(
+                tween: Tween<double>(begin: 0.0, end: initValue),
+                duration: Duration(seconds: 1),
+                builder: (BuildContext context, double size, Widget child){
+                  return IconButton(
+                    color: Colors.blue,
+                    icon: child,
+                    iconSize: initValue,
+                    splashColor: Colors.transparent,
+                    highlightColor: Colors.transparent,
+                    onPressed: (){
+                      //print("onPressed called");
+                      setState(() {
+                        //print("onPressed setState before: $initValue");
+                        initValue = initValue == 24.0?48.0:24.0;
+                        //print("onPressed setState after: $initValue");
+                      });
+                    },
+                  );
                 },
-              );
-            },
+                child: Icon(Icons.tag_faces,)
+            ),
           )
         ],
       ),
