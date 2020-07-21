@@ -65,6 +65,11 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Text("5. Backdrop Login", style: TextStyle(color: Colors.white),),
               color: Colors.black54,
             ),
+            RaisedButton(
+              onPressed: ()=> _openWidget(6, "Animation Builder"),
+              child: Text("6. Animation Builder", style: TextStyle(color: Colors.white),),
+              color: Colors.purple,
+            ),
           ],
         ),
       )

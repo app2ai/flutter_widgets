@@ -1,3 +1,4 @@
+import 'dart:math' as math;
 import 'package:backdrop/backdrop.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -12,8 +13,27 @@ class DynamicWidget extends StatefulWidget {
   _DynamicWidgetState createState() => _DynamicWidgetState();
 }
 
-class _DynamicWidgetState extends State<DynamicWidget> {
+class _DynamicWidgetState extends State<DynamicWidget> with TickerProviderStateMixin{
+  AnimationController _controller;
   var sz = 300.0;
+  final fastMotion = 1;
+  final slowMotion = 10;
+
+  @override
+  void initState() {
+    _controller = AnimationController(
+      duration: Duration(seconds: slowMotion),
+      vsync: this
+    )..repeat();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _controller?.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
       return MaterialApp(
@@ -43,6 +63,7 @@ class _DynamicWidgetState extends State<DynamicWidget> {
       case 3: return _theContainer();
       case 4: return _staggredGridView();
       case 5: return _backdrop();
+      case 6: return _animBuilder();
     }
     return null;
   }
@@ -155,6 +176,23 @@ class _DynamicWidgetState extends State<DynamicWidget> {
       headerHeight: 50.0,frontLayerBorderRadius: BorderRadius.circular(10.0),
       backLayer: Center(child: Text("I am back cover"),),
       frontLayer: Center(child: Text("I am front cover"),),
+    );
+  }
+  
+  Widget _animBuilder(){
+    return Center(
+      child: AnimatedBuilder(
+        animation: _controller,
+        child: Image(
+          image: AssetImage("images/cross.png"),
+        ),
+        builder: (context, childWidget){
+          return Transform.rotate(
+            angle: _controller.value*2.0*math.pi,
+            child: childWidget,
+          );
+        },
+      ),
     );
   }
 }
