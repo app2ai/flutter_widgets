@@ -1,6 +1,6 @@
 # flutter_widget
 
-This project is all about the demo code implementation for Impoertant Widgets of flutter.
+This project is all about the demo code implementation for Important Widgets of flutter.
 
 
 A few resources to get you started if this is your first Flutter project:
