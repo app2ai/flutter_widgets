@@ -66,8 +66,8 @@ class _MyHomePageState extends State<MyHomePage> {
               color: Colors.black54,
             ),
             RaisedButton(
-              onPressed: ()=> _openWidget(6, "Animation Builder"),
-              child: Text("6. Animation Builder", style: TextStyle(color: Colors.white),),
+              onPressed: ()=> _openWidget(6, "Tween and Animated Builder"),
+              child: Text("6. Tween and Animated Builder", style: TextStyle(color: Colors.white),),
               color: Colors.purple,
             ),
           ],

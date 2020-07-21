@@ -18,6 +18,7 @@ class _DynamicWidgetState extends State<DynamicWidget> with TickerProviderStateM
   var sz = 300.0;
   final fastMotion = 1;
   final slowMotion = 10;
+  final fast = 300;
 
   @override
   void initState() {
@@ -180,18 +181,45 @@ class _DynamicWidgetState extends State<DynamicWidget> with TickerProviderStateM
   }
   
   Widget _animBuilder(){
+    double initValue = 24.0;
     return Center(
-      child: AnimatedBuilder(
-        animation: _controller,
-        child: Image(
-          image: AssetImage("images/cross.png"),
-        ),
-        builder: (context, childWidget){
-          return Transform.rotate(
-            angle: _controller.value*2.0*math.pi,
-            child: childWidget,
-          );
-        },
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          AnimatedBuilder(
+            animation: _controller,
+            child: Image(
+              image: AssetImage("images/cross.png"),
+            ),
+            builder: (context, childWidget){
+              return Transform.rotate(
+                angle: _controller.value*2.0*math.pi,
+                child: childWidget,
+              );
+            },
+          ),
+          TweenAnimationBuilder(
+            tween: Tween(begin: 0, end: initValue),
+            duration: Duration(milliseconds: 300),
+            child: IconButton(
+              icon: Icon(Icons.star, color: Colors.orange,),
+            ),
+            builder: (BuildContext context, size, Widget child){
+              return IconButton(
+                color: Colors.blue,
+                icon: child,
+                iconSize: size,
+                onPressed: (){
+                  setState(() {
+                    // If size is small then make it bigger and vise-versa
+                    initValue = initValue == 24.0?48.0:initValue;
+                  });
+                },
+              );
+            },
+          )
+        ],
       ),
     );
   }
