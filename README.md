@@ -1,10 +1,7 @@
-# least_count_demo
+# flutter_widget
 
-Least count app demo
+This project is all about the demo code implementation for Impoertant Widgets of flutter.
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
 
 A few resources to get you started if this is your first Flutter project:
 
