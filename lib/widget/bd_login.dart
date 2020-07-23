@@ -1,21 +1,50 @@
-import 'package:backdrop/backdrop.dart';
 import 'package:flutter/material.dart';
-
+import 'package:least_count_demo/widget/two_panel.dart';
 
 class BackDropLoginDemo extends StatefulWidget {
   @override
   _BackDropLoginDemoState createState() => _BackDropLoginDemoState();
 }
 
-class _BackDropLoginDemoState extends State<BackDropLoginDemo> {
+class _BackDropLoginDemoState extends State<BackDropLoginDemo>
+    with SingleTickerProviderStateMixin{
+
+  AnimationController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(value: 1.0, vsync: this, duration: Duration(milliseconds: 60));
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _controller.dispose();
+  }
+
+  // It will check either animation completed or not
+  bool get isPanelVisible{
+    final AnimationStatus status = _controller.status;
+    return status == AnimationStatus.completed || status == AnimationStatus.forward;
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: BackdropScaffold(
-        title: Text("BD login"),
-        headerHeight: 50.0,frontLayerBorderRadius: BorderRadius.circular(10.0),
-        backLayer: Center(child: Text("I am back cover"),),
-        frontLayer: Center(child: Text("I am front cover"),),
+      home: Scaffold(
+        appBar: AppBar(
+          elevation: 0.0,
+          title:  Text("Backdrop Widget"),
+          leading: IconButton(
+            onPressed: ()=>  _controller.fling(velocity: isPanelVisible?-1.0:1.0),
+            icon: AnimatedIcon(
+              icon: AnimatedIcons.close_menu,
+              progress: _controller.view,
+            ),
+          ),
+        ),
+        body: TwoPanelWidget(controller: _controller,),
       ),
     );
   }
