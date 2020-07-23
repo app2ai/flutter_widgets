@@ -38,7 +38,7 @@ class _TwoPanelWidgetState extends State<TwoPanelWidget> {
             color: theme.primaryColor,
           ),
           PositionedTransition(
-            //rect: getPanelAnim(constraints),
+            rect: getPanelAnim(constraints),
             child: Material(
               color: Colors.white,
               elevation: 12.0,

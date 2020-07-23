@@ -14,7 +14,7 @@ class _BackDropLoginDemoState extends State<BackDropLoginDemo>
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(value: 1.0, vsync: this, duration: Duration(milliseconds: 60));
+    _controller = AnimationController(value: 1.0, vsync: this, duration: Duration(milliseconds: 500));
   }
 
   @override
