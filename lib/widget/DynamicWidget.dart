@@ -20,6 +20,7 @@ class _DynamicWidgetState extends State<DynamicWidget> with TickerProviderStateM
   final slowMotion = 10;
   final fast = 1500;
   double initValue = 24.0;
+  bool isRow = true;
 
   @override
   void initState() {
@@ -66,6 +67,7 @@ class _DynamicWidgetState extends State<DynamicWidget> with TickerProviderStateM
       case 4: return _staggredGridView();
       case 5: return _backdrop();
       case 6: return _animBuilder();
+      case 7: return _rowVsColumn();
     }
     return null;
   }
@@ -207,6 +209,7 @@ class _DynamicWidgetState extends State<DynamicWidget> with TickerProviderStateM
                   return IconButton(
                     color: Colors.blue,
                     icon: child,
+                    tooltip: "click me to see MaGiC",
                     iconSize: initValue,
                     splashColor: Colors.transparent,
                     highlightColor: Colors.transparent,
@@ -222,6 +225,104 @@ class _DynamicWidgetState extends State<DynamicWidget> with TickerProviderStateM
                 },
                 child: Icon(Icons.tag_faces,)
             ),
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget _rowVsColumn(){
+    return Container(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          Flexible(
+            flex: 1,
+            fit: FlexFit.tight,
+            child: _rowColumnControls()
+          ),
+          Flexible(
+            flex: 2,
+            fit: FlexFit.tight,
+            child: Container(
+              child: isRow?_row():_column(),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  Row _row(){
+    return Row(
+      children: _rcChildren(),
+    );
+  }
+
+  Column _column(){
+    return Column(
+      children: _rcChildren(),
+    );
+  }
+
+  List<Widget> _rcChildren(){
+    return [
+      Icon(Icons.tag_faces),
+      Text("Smiley"),
+      Icon(Icons.star),
+      Text("Star")
+    ];
+  }
+
+  Widget _rowColumnControls(){
+    return Container(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: <Widget>[
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              OutlineButton(
+                onPressed: null,
+                child: Text("Row"),
+                highlightElevation: 4.0,
+              ),
+              OutlineButton(
+                onPressed: null,
+                child: Text("Column"),
+                highlightElevation: 4.0,
+              )
+            ],
+          ),
+          Row(
+            children: <Widget>[
+              OutlineButton(
+                onPressed: null,
+                child: Text("SpaceEvenly", style: TextStyle(fontSize: 12.0),),
+                highlightElevation: 2.0,
+              ),
+              OutlineButton(
+                onPressed: null,
+                child: Text("Center", style: TextStyle(fontSize: 12.0),),
+                highlightElevation: 2.0,
+              ),
+              OutlineButton(
+                onPressed: null,
+                child: Text("Start", style: TextStyle(fontSize: 12.0),),
+                highlightElevation: 2.0,
+              ),
+              OutlineButton(
+                onPressed: null,
+                child: Text("SapceBetween", style: TextStyle(fontSize: 12.0),),
+                highlightElevation: 2.0,
+              ),
+              OutlineButton(
+                onPressed: null,
+                child: Text("End", style: TextStyle(fontSize: 12.0),),
+                highlightElevation: 2.0,
+              ),
+            ],
           )
         ],
       ),

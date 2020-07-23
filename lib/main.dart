@@ -70,6 +70,11 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Text("6. Tween and Animated Builder", style: TextStyle(color: Colors.white),),
               color: Colors.purple,
             ),
+            RaisedButton(
+              onPressed: ()=> _openWidget(7, "Row & Column Widget"),
+              child: Text("7. Row & Column Widget", style: TextStyle(color: Colors.white),),
+              color: Colors.purple,
+            ),
           ],
         ),
       )
@@ -77,10 +82,6 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void _openWidget(int index, String title){
-    if(index == 5){
-      Navigator.of(context).push(MaterialPageRoute(builder: (context)=> BackDropLoginDemo()));
-      return;
-    }
     Navigator.of(context).push(MaterialPageRoute(builder: (context)=> DynamicWidget(index, title)));
   }
 }
