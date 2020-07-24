@@ -13,21 +13,24 @@ class DynamicWidget extends StatefulWidget {
   _DynamicWidgetState createState() => _DynamicWidgetState();
 }
 
-class _DynamicWidgetState extends State<DynamicWidget> with TickerProviderStateMixin{
+class _DynamicWidgetState extends State<DynamicWidget>
+    with TickerProviderStateMixin {
   AnimationController _controller;
   var sz = 300.0;
   final fastMotion = 1;
   final slowMotion = 10;
   final fast = 1500;
   double initValue = 24.0;
-  bool isRow = true;
+  bool isRow = false;
+  Color pressedColor = Colors.teal;
+  Color controlColor = Colors.purple;
+  MainAxisAlignment mainAxisAlisgn = MainAxisAlignment.start;
 
   @override
   void initState() {
     _controller = AnimationController(
-      duration: Duration(seconds: slowMotion),
-      vsync: this
-    )..repeat();
+        duration: Duration(seconds: slowMotion), vsync: this)
+      ..repeat();
     super.initState();
   }
 
@@ -39,61 +42,72 @@ class _DynamicWidgetState extends State<DynamicWidget> with TickerProviderStateM
 
   @override
   Widget build(BuildContext context) {
-      return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: widget?.title,
-        theme: ThemeData(
-            primaryColor: Colors.deepOrange,
-            accentColor: Colors.deepOrangeAccent
-        ),
-        home: Scaffold(
-          appBar: AppBar(
-            title: Text(widget?.title),
-            leading: IconButton(
-              icon: Icon(Icons.arrow_back),
-              onPressed: ()=> Navigator.of(context).pop(),
-            ),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: widget?.title,
+      theme: ThemeData(
+          primaryColor: Colors.deepOrange,
+          accentColor: Colors.deepOrangeAccent),
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text(widget?.title),
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () => Navigator.of(context).pop(),
           ),
-          body: _getIndexedWidget(widget.index),
         ),
-      );
+        body: _getIndexedWidget(widget.index),
+      ),
+    );
   }
 
-  Widget _getIndexedWidget(int i){
-    switch(i){
-      case 1: return _expantionListView();
-      case 2: return _listView();
-      case 3: return _theContainer();
-      case 4: return _staggredGridView();
-      case 5: return _backdrop();
-      case 6: return _animBuilder();
-      case 7: return _rowVsColumn();
+  Widget _getIndexedWidget(int i) {
+    switch (i) {
+      case 1:
+        return _expantionListView();
+      case 2:
+        return _listView();
+      case 3:
+        return _theContainer();
+      case 4:
+        return _staggredGridView();
+      case 5:
+        return _backdrop();
+      case 6:
+        return _animBuilder();
+      case 7:
+        return _rowVsColumn();
     }
     return null;
   }
 
-  Widget _expantionListView(){
-    final expList = List.generate(8, (i)=> "Header Index ${i+1}");
+  Widget _expantionListView() {
+    final expList = List.generate(8, (i) => "Header Index ${i + 1}");
     return Container(
       padding: const EdgeInsets.all(10.0),
       child: ListView.builder(
-        itemBuilder: (context, index)=> ExpansionTile(
-          leading: Icon(Icons.star_border, color: Theme.of(context).accentColor,),
+        itemBuilder: (context, index) => ExpansionTile(
+          leading: Icon(
+            Icons.star_border,
+            color: Theme.of(context).accentColor,
+          ),
           title: Text(expList[index]),
-          children: expList.map((val)=> ListTile(
-            title: Text(val),
-          )).toList(),
+          children: expList
+              .map((val) => ListTile(
+                    title: Text(val),
+                  ))
+              .toList(),
         ),
         itemCount: 5,
       ),
     );
   }
 
-  Widget _listView(){
-    List magicList = List.generate(40, (ind)=> "List index ${ind+1}");
+  Widget _listView() {
+    List magicList = List.generate(40, (ind) => "List index ${ind + 1}");
     return Align(
       child: ListView.builder(
-        itemBuilder: (context, index){
+        itemBuilder: (context, index) {
           return ListTile(
             title: Text(
               "Data: ${magicList[index]}",
@@ -110,7 +124,7 @@ class _DynamicWidgetState extends State<DynamicWidget> with TickerProviderStateM
     );
   }
 
-  Widget _theContainer(){
+  Widget _theContainer() {
     return Container(
       padding: const EdgeInsets.all(8.0),
       child: Column(
@@ -122,7 +136,7 @@ class _DynamicWidgetState extends State<DynamicWidget> with TickerProviderStateM
             child: Slider(
               activeColor: Colors.red,
               value: sz,
-              onChanged: (size){
+              onChanged: (size) {
                 setState(() {
                   sz = size;
                 });
@@ -144,7 +158,7 @@ class _DynamicWidgetState extends State<DynamicWidget> with TickerProviderStateM
     );
   }
 
-  Widget _staggredGridView(){
+  Widget _staggredGridView() {
     List imgUrls = [
       "https://images.pexels.com/photos/264146/pexels-photo-264146.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=250",
       "https://images.pexels.com/photos/163443/war-desert-guns-gunshow-163443.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=250",
@@ -162,10 +176,14 @@ class _DynamicWidgetState extends State<DynamicWidget> with TickerProviderStateM
       child: StaggeredGridView.countBuilder(
         crossAxisCount: 4,
         itemCount: 8,
-        itemBuilder: (context, index){
-          return Image.network(imgUrls[index], fit: BoxFit.fill,);
+        itemBuilder: (context, index) {
+          return Image.network(
+            imgUrls[index],
+            fit: BoxFit.fill,
+          );
         },
-        staggeredTileBuilder: (int index)=> StaggeredTile.count(2, index.isEven?2:1),
+        staggeredTileBuilder: (int index) =>
+            StaggeredTile.count(2, index.isEven ? 2 : 1),
         mainAxisSpacing: 4.0,
         crossAxisSpacing: 4.0,
         reverse: true,
@@ -174,16 +192,21 @@ class _DynamicWidgetState extends State<DynamicWidget> with TickerProviderStateM
   }
 
   // Its optional
-  Widget _backdrop(){
+  Widget _backdrop() {
     return BackdropScaffold(
       title: Text("BD login"),
-      headerHeight: 50.0,frontLayerBorderRadius: BorderRadius.circular(10.0),
-      backLayer: Center(child: Text("I am back cover"),),
-      frontLayer: Center(child: Text("I am front cover"),),
+      headerHeight: 50.0,
+      frontLayerBorderRadius: BorderRadius.circular(10.0),
+      backLayer: Center(
+        child: Text("I am back cover"),
+      ),
+      frontLayer: Center(
+        child: Text("I am front cover"),
+      ),
     );
   }
-  
-  Widget _animBuilder(){
+
+  Widget _animBuilder() {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -194,9 +217,9 @@ class _DynamicWidgetState extends State<DynamicWidget> with TickerProviderStateM
             child: Image(
               image: AssetImage("images/cross.png"),
             ),
-            builder: (context, childWidget){
+            builder: (context, childWidget) {
               return Transform.rotate(
-                angle: _controller.value*2.0*math.pi,
+                angle: _controller.value * 2.0 * math.pi,
                 child: childWidget,
               );
             },
@@ -205,7 +228,7 @@ class _DynamicWidgetState extends State<DynamicWidget> with TickerProviderStateM
             child: TweenAnimationBuilder(
                 tween: Tween<double>(begin: 0.0, end: initValue),
                 duration: Duration(seconds: 1),
-                builder: (BuildContext context, double size, Widget child){
+                builder: (BuildContext context, double size, Widget child) {
                   return IconButton(
                     color: Colors.blue,
                     icon: child,
@@ -213,39 +236,36 @@ class _DynamicWidgetState extends State<DynamicWidget> with TickerProviderStateM
                     iconSize: initValue,
                     splashColor: Colors.transparent,
                     highlightColor: Colors.transparent,
-                    onPressed: (){
+                    onPressed: () {
                       //print("onPressed called");
                       setState(() {
                         //print("onPressed setState before: $initValue");
-                        initValue = initValue == 24.0?48.0:24.0;
+                        initValue = initValue == 24.0 ? 48.0 : 24.0;
                         //print("onPressed setState after: $initValue");
                       });
                     },
                   );
                 },
-                child: Icon(Icons.tag_faces,)
-            ),
+                child: Icon(
+                  Icons.tag_faces,
+                )),
           )
         ],
       ),
     );
   }
 
-  Widget _rowVsColumn(){
+  Widget _rowVsColumn() {
     return Container(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          Flexible(
-            flex: 1,
-            fit: FlexFit.tight,
-            child: _rowColumnControls()
-          ),
+          Flexible(flex: 1, fit: FlexFit.tight, child: _rowColumnControls()),
           Flexible(
             flex: 2,
             fit: FlexFit.tight,
             child: Container(
-              child: isRow?_row():_column(),
+              child: isRow ? _row() : _column(),
             ),
           )
         ],
@@ -253,19 +273,21 @@ class _DynamicWidgetState extends State<DynamicWidget> with TickerProviderStateM
     );
   }
 
-  Row _row(){
+  Row _row() {
     return Row(
+      mainAxisAlignment: mainAxisAlisgn,
       children: _rcChildren(),
     );
   }
 
-  Column _column(){
+  Column _column() {
     return Column(
+      mainAxisAlignment: mainAxisAlisgn,
       children: _rcChildren(),
     );
   }
 
-  List<Widget> _rcChildren(){
+  List<Widget> _rcChildren() {
     return [
       Icon(Icons.tag_faces),
       Text("Smiley"),
@@ -274,7 +296,7 @@ class _DynamicWidgetState extends State<DynamicWidget> with TickerProviderStateM
     ];
   }
 
-  Widget _rowColumnControls(){
+  Widget _rowColumnControls() {
     return Container(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -283,49 +305,108 @@ class _DynamicWidgetState extends State<DynamicWidget> with TickerProviderStateM
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              OutlineButton(
-                onPressed: null,
+              RaisedButton(
+                onPressed: (){
+                  setState(() {
+                    isRow = true;
+                  });
+                },
                 child: Text("Row"),
-                highlightElevation: 4.0,
+                color: isRow?pressedColor:Colors.transparent,
               ),
-              OutlineButton(
-                onPressed: null,
+              RaisedButton(
+                onPressed: (){
+                  setState(() {
+                    isRow = false;
+                  });
+                },
                 child: Text("Column"),
-                highlightElevation: 4.0,
+                color: isRow?Colors.transparent:pressedColor,
               )
             ],
           ),
-          Row(
+          Wrap(
+            crossAxisAlignment: WrapCrossAlignment.center,
             children: <Widget>[
-              OutlineButton(
-                onPressed: null,
-                child: Text("SpaceEvenly", style: TextStyle(fontSize: 12.0),),
+              RaisedButton(
+                onPressed: (){
+                  setState(() {
+                    _controlListener(MainAxisAlignment.spaceEvenly);
+                  });
+                },
+                child: Text(
+                  "SpaceEvenly",
+                  style: TextStyle(fontSize: 12.0),
+                ),
+              ),
+              RaisedButton(
+                onPressed: (){
+                  setState(() {
+                    _controlListener(MainAxisAlignment.center);
+                  });
+                },
+                child: Text(
+                  "Center",
+                  style: TextStyle(fontSize: 12.0),
+                ),
                 highlightElevation: 2.0,
               ),
-              OutlineButton(
-                onPressed: null,
-                child: Text("Center", style: TextStyle(fontSize: 12.0),),
+              RaisedButton(
+                onPressed: (){
+                  setState(() {
+                    _controlListener(MainAxisAlignment.spaceBetween);
+                  });
+                },
+                child: Text(
+                  "SapceBetween",
+                  style: TextStyle(fontSize: 12.0),
+                ),
                 highlightElevation: 2.0,
               ),
-              OutlineButton(
-                onPressed: null,
-                child: Text("Start", style: TextStyle(fontSize: 12.0),),
+              RaisedButton(
+                onPressed: (){
+                  setState(() {
+                    _controlListener(MainAxisAlignment.end);
+                  });
+                },
+                child: Text(
+                  "End",
+                  style: TextStyle(fontSize: 12.0),
+                ),
                 highlightElevation: 2.0,
               ),
-              OutlineButton(
-                onPressed: null,
-                child: Text("SapceBetween", style: TextStyle(fontSize: 12.0),),
+              RaisedButton(
+                onPressed: (){
+                  setState(() {
+                    _controlListener(MainAxisAlignment.spaceAround);
+                  });
+                },
+                child: Text(
+                  "Space Around",
+                  style: TextStyle(fontSize: 12.0),
+                ),
                 highlightElevation: 2.0,
               ),
-              OutlineButton(
-                onPressed: null,
-                child: Text("End", style: TextStyle(fontSize: 12.0),),
+              RaisedButton(
+                onPressed: (){
+                  setState(() {
+                    _controlListener(MainAxisAlignment.start);
+                  });
+                },
+                child: Text(
+                  "Start",
+                  style: TextStyle(fontSize: 12.0),
+                ),
                 highlightElevation: 2.0,
               ),
             ],
-          )
+          ),
         ],
       ),
     );
+  }
+
+  void _controlListener(MainAxisAlignment alignment){
+    mainAxisAlisgn = alignment;
   }
 }
