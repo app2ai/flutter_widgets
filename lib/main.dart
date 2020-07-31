@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:least_count_demo/widget/DynamicWidget.dart';
 import 'package:least_count_demo/widget/bd_login.dart';
+import 'login_design/login.dart' show BeautyLogin;
 
 void main() => runApp(MyApp());
 
@@ -72,8 +73,13 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             RaisedButton(
               onPressed: ()=> _openWidget(7, "Row & Column Widget"),
-              child: Text("7. Row & Column Widget", style: TextStyle(color: Colors.white),),
-              color: Colors.purple,
+              child: Text("7. Row & Column Widget", style: TextStyle(color: Colors.black),),
+              color: Colors.orange,
+            ),
+            RaisedButton(
+              onPressed: ()=> _openWidget(8, "Beauty Login"),
+              child: Text("8. Beauty Login", style: TextStyle(color: Colors.black),),
+              color: Colors.blue,
             ),
           ],
         ),
@@ -84,6 +90,10 @@ class _MyHomePageState extends State<MyHomePage> {
   void _openWidget(int index, String title){
     if(index == 5){
       Navigator.of(context).push(MaterialPageRoute(builder: (context)=> BackDropLoginDemo()));
+      return;
+    }
+    if(index == 8){
+      Navigator.of(context).push(MaterialPageRoute(builder: (context)=> BeautyLogin()));
       return;
     }
     Navigator.of(context).push(MaterialPageRoute(builder: (context)=> DynamicWidget(index, title)));
