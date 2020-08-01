@@ -42,6 +42,10 @@ class _DynamicNavLayoutState extends State<DynamicNavLayout> {
             elevation: 4.0,
             backgroundColor: Colors.white,
             labelType: NavigationRailLabelType.selected,
+            leading: CircleAvatar(
+              backgroundColor: Colors.greenAccent,
+              backgroundImage: AssetImage("images/me.JPG"),
+            ),
             destinations: [
               NavigationRailDestination(
                 icon: Icon(Icons.star_border),
@@ -71,5 +75,3 @@ class _DynamicNavLayoutState extends State<DynamicNavLayout> {
     );
   }
 }
-
-
