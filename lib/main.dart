@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:least_count_demo/widget/DynamicWidget.dart';
 import 'package:least_count_demo/widget/bd_login.dart';
+import 'package:least_count_demo/widget/navigation_rail.dart';
 import 'login_design/login.dart' show BeautyLogin;
 
 void main() => runApp(MyApp());
@@ -81,6 +82,11 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Text("8. Beauty Login", style: TextStyle(color: Colors.black),),
               color: Colors.blue,
             ),
+            RaisedButton(
+              onPressed: ()=> _openWidget(9, "Navigation Rail"),
+              child: Text("9. Navigation Rail", style: TextStyle(color: Colors.black),),
+              color: Colors.greenAccent,
+            ),
           ],
         ),
       )
@@ -94,6 +100,10 @@ class _MyHomePageState extends State<MyHomePage> {
     }
     if(index == 8){
       Navigator.of(context).push(MaterialPageRoute(builder: (context)=> BeautyLogin()));
+      return;
+    }
+    if(index == 9){
+      Navigator.of(context).push(MaterialPageRoute(builder: (context)=> NavRail()));
       return;
     }
     Navigator.of(context).push(MaterialPageRoute(builder: (context)=> DynamicWidget(index, title)));
